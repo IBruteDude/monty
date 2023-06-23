@@ -152,13 +152,13 @@ int main(int argc, char *argv[])
 		infile = fopen(argv[i], "r");
 		if (infile == NULL)
 			fprintf(stderr, "Error: Can't open file %s\n", argv[i]), exit(EXIT_FAILURE);
-		while (getline(&line, &line_len, infile) != EOF)
-		{
+		do {
+			getline(&line, &line_len, infile); 
 			tk_arr = tokenise(line);
 			/* printf("L%d = %s : %s", line_no, tk_arr[0], tk_arr[1]); */
 			exec_ist(tk_arr, line_no);
 			line_no++;
-		}
+		} while (!feof(infile));
 		exit(EXIT_SUCCESS);
 	}
 	return (EXIT_SUCCESS);
