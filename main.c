@@ -2,26 +2,6 @@
 
 typedef instruction_t ist;
 
-instruction_t insts[] = {
-	{"push", push_ist},
-	{"pall", pall_ist},
-	{"pint", pint_ist},
-	{"pop", pop_ist},
-	{"swap", swap_ist},
-	{"add", add_ist},
-	{"nop", nop_ist},
-	{"sub", sub_ist},
-	{"div", div_ist},
-	{"mul", mul_ist},
-	{"mod", mod_ist},
-	{"pchar", pchar_ist},
-	{"pstr", pstr_ist},
-	{"rotl", rotl_ist},
-	{"rotr", rotr_ist},
-	{"stack", stack_ist},
-	{"queue", queue_ist},
-	{NULL, NULL}
-};
 SQW global_wrapper;
 
 /**
@@ -77,6 +57,15 @@ void exec_ist(char **tok_arr, unsigned int line_no)
 	int i = 1;
 	stack_t *stack_node;
 
+	instruction_t insts[] = {
+		{"push", push_ist}, {"pop", pop_ist}, {"nop", nop_ist},
+		{"rotl", rotl_ist}, {"rotr", rotr_ist}, {"swap", swap_ist},
+		{"pall", pall_ist}, {"pint", pint_ist}, {"pchar", pchar_ist},
+		{"pstr", pstr_ist}, {"stack", stack_ist}, {"queue", queue_ist},
+		{"add", add_ist}, {"sub", sub_ist}, {"div", div_ist},
+		{"mul", mul_ist}, {"mod", mod_ist},
+		{NULL, NULL}
+	};
 	if (strcmp(tok_arr[0], "push") == 0)
 	{
 		if (tok_arr[1] == NULL)
