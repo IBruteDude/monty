@@ -48,6 +48,8 @@ typedef struct stack_queue_wrapper
 	stack_t *tail;
 } SQW;
 
+typedef instruction_t ist;
+
 #define STACK_F 0
 #define QUEUE_F 1
 

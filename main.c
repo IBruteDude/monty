@@ -1,7 +1,5 @@
 #include "main.h"
 
-typedef instruction_t ist;
-
 SQW global_wrapper;
 
 /**
@@ -48,11 +46,16 @@ char **tokenise(char *line)
 			}
 		}
 	}
-	return tks;
+	return (tks);
 }
 
-
-void exec_ist(char **tok_arr, unsigned int line_no)
+/**
+ * exec_instruction - execute an instruction
+ *
+ * @tok_arr: the parsed tokens array
+ * @line_no: the execution line number
+ */
+void exec_instruction(char **tok_arr, unsigned int line_no)
 {
 	int i = 1;
 	stack_t *stack_node;
@@ -69,25 +72,29 @@ void exec_ist(char **tok_arr, unsigned int line_no)
 	if (strcmp(tok_arr[0], "push") == 0)
 	{
 		if (tok_arr[1] == NULL)
-			fprintf(stderr, "L%d: usage: push integer\n", line_no), exit(EXIT_FAILURE);
+			fprintf(stderr, "L%d: usage: push integer\n", line_no),
+			exit(EXIT_FAILURE);
 		push_new(&global_wrapper, atoi(tok_arr[1]));
-		return ;
+		return;
 	}
-	while (insts[i].opcode != NULL)
-	{
+	for (i = 1; insts[i].opcode != NULL; i++)
 		if (strcmp(insts[i].opcode, tok_arr[0]) == 0)
 		{
 			stack_node = iterator(&global_wrapper, NULL);
 			insts[i].f(&stack_node, line_no);
-			return ;
+			return;
 		}
-		i++;
-	}
 }
 
-typedef signed long int ssize_t;
-
-ssize_t getline(char **lineptr, size_t *n, FILE *stream)
+/**
+ * _getline - a stupid implementation because I can't get the original to work
+ *
+ * @lineptr: the address of the line write buffer
+ * @n: the address storing the length of the buffer
+ * @stream: the input file stream
+ * Return: number of read bytes or EOF if it's hit
+ */
+long int _getline(char **lineptr, size_t *n, FILE *stream)
 {
 	int i = 0, buf_siz = 1024;
 	char read_char, *temp, *line = malloc(buf_siz);
@@ -142,10 +149,9 @@ int main(int argc, char *argv[])
 		if (infile == NULL)
 			fprintf(stderr, "Error: Can't open file %s\n", argv[i]), exit(EXIT_FAILURE);
 		do {
-			getline(&line, &line_len, infile); 
+			_getline(&line, &line_len, infile);
 			tk_arr = tokenise(line);
-			/* printf("L%d = %s : %s", line_no, tk_arr[0], tk_arr[1]); */
-			exec_ist(tk_arr, line_no);
+			exec_instruction(tk_arr, line_no);
 			line_no++;
 		} while (!feof(infile));
 		exit(EXIT_SUCCESS);

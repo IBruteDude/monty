@@ -1,5 +1,12 @@
 #include "main.h"
 
+/**
+ * push_new - pushs a new element on the underlying linked list
+ *
+ * @wpr: input S/Q wrapper address
+ * @element: the value of the new pushed element
+ * Return: a pointer to the pushed element
+ */
 stack_t *push_new(SQW *wpr, int element)
 {
 	stack_t *tail;
@@ -13,6 +20,12 @@ stack_t *push_new(SQW *wpr, int element)
 	return (tail);
 }
 
+/**
+ * pop_new - pops a new element off the underlying linked list
+ *
+ * @wpr: input S/Q wrapper address
+ * Return: a pointer to the popped element
+ */
 stack_t *pop_new(SQW *wpr)
 {
 	stack_t *popped = NULL;
@@ -21,10 +34,6 @@ stack_t *pop_new(SQW *wpr)
 	{
 		if (wpr->tail == NULL)
 			return (NULL);
-		/*
-			fprintf(stderr, "L%d: can't pop an empty stack", wpr->line_no),
-			exit(EXIT_FAILURE);
-		*/
 		popped = wpr->tail;
 		if (popped == wpr->head)
 			free(wpr->head), wpr->head = wpr->tail = NULL;
@@ -35,10 +44,6 @@ stack_t *pop_new(SQW *wpr)
 	{
 		if (wpr->head == NULL)
 			return (NULL);
-		/*
-			fprintf(stderr, "L%d: can't pop an empty stack", wpr->line_no),
-			exit(EXIT_FAILURE);
-		*/
 		popped = wpr->head;
 		if (popped == wpr->tail)
 			free(wpr->tail), wpr->head = wpr->tail = NULL;
@@ -48,6 +53,13 @@ stack_t *pop_new(SQW *wpr)
 	return (popped);
 }
 
+/**
+ * iterator - an iterator abstraction over the S/Q wrapper
+ *
+ * @wpr: input S/Q wrapper address
+ * @current: the current iteration element address
+ * Return: teh next iteration element address
+ */
 stack_t *iterator(SQW *wpr, stack_t *current)
 {
 	if (current == NULL)

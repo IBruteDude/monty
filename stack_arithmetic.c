@@ -1,6 +1,13 @@
 #include "main.h"
 
-void add_ist(stack_t **stack UU_VAR, unsigned int line_number UU_VAR)
+/**
+ * add_ist - instruction to perform add operation on the last two elements
+ *
+ * @stack: the address of the pointer to the input stack variable
+ * @line_number: the number of the current execution line
+ */
+void add_ist(__attribute__((__unused__))stack_t **stack,
+	__attribute__((__unused__))unsigned int line_number)
 {
 	stack_t *s1, *s2;
 
@@ -11,7 +18,14 @@ void add_ist(stack_t **stack UU_VAR, unsigned int line_number UU_VAR)
 		exit(EXIT_FAILURE);
 	push_new(&global_wrapper, s2->n + s1->n);
 }
-void sub_ist(stack_t **stack UU_VAR, unsigned int line_number UU_VAR)
+/**
+ * sub_ist - instruction to perform subtract operation on the last two elements
+ *
+ * @stack: the address of the pointer to the input stack variable
+ * @line_number: the number of the current execution line
+ */
+void sub_ist(__attribute__((__unused__))stack_t **stack,
+	__attribute__((__unused__))unsigned int line_number)
 {
 	stack_t *s1, *s2;
 
@@ -22,7 +36,14 @@ void sub_ist(stack_t **stack UU_VAR, unsigned int line_number UU_VAR)
 		exit(EXIT_FAILURE);
 	push_new(&global_wrapper, s2->n - s1->n);
 }
-void mul_ist(stack_t **stack UU_VAR, unsigned int line_number UU_VAR)
+/**
+ * mul_ist - instruction to perform multiply operation on the last two elements
+ *
+ * @stack: the address of the pointer to the input stack variable
+ * @line_number: the number of the current execution line
+ */
+void mul_ist(__attribute__((__unused__))stack_t **stack,
+	__attribute__((__unused__))unsigned int line_number)
 {
 	stack_t *s1, *s2;
 
@@ -33,7 +54,14 @@ void mul_ist(stack_t **stack UU_VAR, unsigned int line_number UU_VAR)
 		exit(EXIT_FAILURE);
 	push_new(&global_wrapper, s2->n * s1->n);
 }
-void div_ist(stack_t **stack UU_VAR, unsigned int line_number UU_VAR)
+/**
+ * div_ist - instruction to perform division operation on the last two elements
+ *
+ * @stack: the address of the pointer to the input stack variable
+ * @line_number: the number of the current execution line
+ */
+void div_ist(__attribute__((__unused__))stack_t **stack,
+	__attribute__((__unused__))unsigned int line_number)
 {
 	stack_t *s1, *s2;
 
@@ -47,7 +75,14 @@ void div_ist(stack_t **stack UU_VAR, unsigned int line_number UU_VAR)
 		exit(EXIT_FAILURE);
 	push_new(&global_wrapper, s2->n / s1->n);
 }
-void mod_ist(stack_t **stack UU_VAR, unsigned int line_number UU_VAR)
+/**
+ * mod_ist - instruction to perform modulo operation on the last two elements
+ *
+ * @stack: the address of the pointer to the input stack variable
+ * @line_number: the number of the current execution line
+ */
+void mod_ist(__attribute__((__unused__))stack_t **stack,
+	__attribute__((__unused__))unsigned int line_number)
 {
 	stack_t *s1, *s2;
 
