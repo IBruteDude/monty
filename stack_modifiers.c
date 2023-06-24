@@ -1,4 +1,4 @@
-#include "main.h"
+#include "monty.h"
 
 /**
  * rotl_ist - instruction to rotate the linked list circularly left

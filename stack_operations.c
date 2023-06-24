@@ -1,4 +1,4 @@
-#include "main.h"
+#include "monty.h"
 
 /**
  * push_ist - empty instruction for pushing a new element
@@ -47,4 +47,5 @@ void swap_ist(__attribute__((__unused__)) stack_t **stack,
  * @line_number: the number of the current execution line
  */
 void nop_ist(__attribute__((__unused__)) stack_t **stack,
-	__attribute__((__unused__)) unsigned int line_number) {}
+	__attribute__((__unused__)) unsigned int line_number)
+{}
