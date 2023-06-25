@@ -57,6 +57,7 @@ typedef instruction_t ist;
 #define PCHAR 2
 #define PSTR 3
 
+#define isintlit(x) (isdigit(x) || (x) == '-' || (x) == '+')
 #define UU_VAR	\
 		__attribute__((__unused__))
 #define MALLOC_CHECK(var) \

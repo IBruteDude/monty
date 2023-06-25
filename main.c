@@ -33,9 +33,9 @@ char **tokenise(char *line)
 			line[tk_l] = '\0';
 			strcpy(tk, line), line += tk_l + 1, tk_l = 0;
 			tks[0] = tk;
-			while (isspace(*line))
+			while (!isintlit(*line))
 				line++;
-			while (isdigit(line[tk_l]))
+			while (isintlit(*line))
 				tk_l++;
 			if (tk_l != 0)
 			{
