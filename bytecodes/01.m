@@ -3,7 +3,7 @@ push 1 Push 1 onto the stack
 
 push 2
 pop
-  push -3
+  push 3
                    pall    
 
 
@@ -11,9 +11,8 @@ pop
 push 4
 
     push 5    
-      push     3dads
+      push     -3dads
 	pall
-push 5
 pint
 pint
 pint

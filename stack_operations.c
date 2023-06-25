@@ -35,14 +35,15 @@ void swap_ist(__attribute__((__unused__)) stack_t **stack,
 	__attribute__((__unused__)) unsigned int line_number)
 {
 	stack_t *s1, *s2;
-
-	s1 = pop_new();
-	s2 = pop_new();
+	int temp;
+	s1 = iterator(NULL);
+	s2 = iterator(s1);
 	if (s1 == NULL || s2 == NULL)
 		fprintf(stderr, "L%d: can't swap, stack too short\n", line_number),
 		exit(EXIT_FAILURE);
-	push_new(s1->n);
-	push_new(s2->n);
+	temp = s1->n;
+	s1->n = s2->n;
+	s2->n = temp;
 }
 /**
  * nop_ist - the null/no operation instruction

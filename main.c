@@ -19,7 +19,7 @@ char **tokenise(char *line)
 		line++;
 	if (*line != '\0')
 	{
-		while (!isspace(line[tk_l]) && line[tk_l] != '\0')
+		while (!isspace(line[tk_l]) && line[tk_l] != '\0' && line[tk_l] != '#')
 			tk_l++;
 		tk = malloc(tk_l + 1), tk[tk_l] = '\0';
 		MALLOC_CHECK(tk);
@@ -33,9 +33,9 @@ char **tokenise(char *line)
 			line[tk_l] = '\0';
 			strcpy(tk, line), line += tk_l + 1, tk_l = 0;
 			tks[0] = tk;
-			while (!isintlit(*line))
+			while (isspace(*line) && *line != '-' && *line != '+')
 				line++;
-			while (isintlit(*line))
+			while (isintlit(line[tk_l]))
 				tk_l++;
 			if (tk_l != 0)
 			{
@@ -108,10 +108,10 @@ int exec_instruction(char **tok_arr, unsigned int line_no)
  * @stream: the input file stream
  * Return: number of read bytes or EOF if it's hit
  */
-long int _getline(char **lineptr, size_t *n, FILE *stream)
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 {
-	int i = 0, buf_siz = 1024;
-	char read_char, *temp, *line = malloc(buf_siz);
+	int i = 0, buf_siz = *n/* 1024 */;
+	char read_char, *temp, *line = *lineptr/* malloc(buf_siz) */;
 
 	MALLOC_CHECK(line);
 	do {
@@ -128,9 +128,9 @@ long int _getline(char **lineptr, size_t *n, FILE *stream)
 		i++;
 	} while (read_char != '\n' && read_char != '\0');
 	line[i] = '\0';
-	if (*lineptr)
-		free(*lineptr);
-	*n = (size_t) i;
+	/* if (*lineptr) */
+		/* free(*lineptr); */
+	*n = (size_t)buf_siz;
 	*lineptr = line;
 	if (feof(stream))
 		return (EOF);
@@ -160,7 +160,8 @@ int main(int argc, char *argv[])
 	{
 		infile = fopen(argv[i], "r");
 		if (infile == NULL)
-			fprintf(stderr, "Error: Can't open file %s\n", argv[i]), exit(EXIT_FAILURE);
+			fprintf(stderr, "Error: Can't open file %s\n", argv[i]),
+			free(line), exit(EXIT_FAILURE);
 		do {
 			_getline(&line, &line_len, infile);
 			tk_arr = tokenise(line);
@@ -168,9 +169,9 @@ int main(int argc, char *argv[])
 			free(tk_arr[0]), free(tk_arr[1]), free(tk_arr);
 			line_no++;
 		} while (!feof(infile) && exec_stat == EXIT_SUCCESS);
-		free(line);
 		free_SQW();
 		fclose(infile);
 	}
+	free(line);
 	return (exec_stat);
 }
