@@ -35,7 +35,7 @@ stack_t *push_new(int value)
  *
  * Return: a pointer to the popped element
  */
-stack_t *pop_new()
+stack_t *pop_new(void)
 {
 	stack_t *popped = NULL;
 
@@ -92,7 +92,7 @@ stack_t *iterator(stack_t *current)
 /**
  * free_SQW - frees the S/Q wrapper underlying linked lists nodes
  */
-void free_SQW()
+void free_SQW(void)
 {
 	stack_t *crt_node = global_wrapper.head, *next_node;
 
@@ -109,16 +109,17 @@ void free_SQW()
 /**
  * debug_print_SQW - a debug printer for the S/Q wrapper
  */
-void debug_print_SQW()
+void debug_print_SQW(void)
 {
 	stack_t *node = global_wrapper.head;
 	int i = 0;
 
 	if (global_wrapper.head && global_wrapper.tail)
-		printf("\n/---------\nhead: %4x, next: %4x, prev: %4x\ntail: %4x, next: %4x, prev: %4x\n---------/\n",
+		printf("\n/---------\nhead: %4x, next: %4x, prev: %4x\n",
 			(uint8_t)(intptr_t)global_wrapper.head,
 			(uint8_t)(intptr_t)global_wrapper.head->next,
-			(uint8_t)(intptr_t)global_wrapper.head->prev,
+			(uint8_t)(intptr_t)global_wrapper.head->prev),
+		printf("tail: %4x, next: %4x, prev: %4x\n---------/\n",
 			(uint8_t)(intptr_t)global_wrapper.tail,
 			(uint8_t)(intptr_t)global_wrapper.tail->next,
 			(uint8_t)(intptr_t)global_wrapper.tail->prev);
@@ -128,7 +129,7 @@ void debug_print_SQW()
 			(uint8_t)(intptr_t)global_wrapper.tail);
 	while (node != NULL)
 	{
-		printf("-N%d: %4x\n", i, (uint8_t)(intptr_t)node/*, (uint8_t)(intptr_t)node->next*/);
+		printf("-N%d: %4x\n", i, (uint8_t)(intptr_t)node);
 		node = node->next, i++;
 	}
 }

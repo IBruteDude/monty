@@ -41,6 +41,14 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+/**
+ * struct stack_queue_wrapper - a wrapping abstraction layer over
+ *		stack and queue data structure methods
+ *
+ * @SQ_flag: store the current state of the wrapper
+ * @head: the head of the underlying linked list
+ * @tail: the tail of the underlying linked list
+ */
 typedef struct stack_queue_wrapper
 {
 	int SQ_flag;
@@ -61,16 +69,16 @@ typedef instruction_t ist;
 #define isintlit(x) (isdigit(x) || (x) == '-' || (x) == '+')
 #define UU_VAR	\
 		__attribute__((__unused__))
-#define MALLOC_CHECK(var) \
-if (var == NULL) \
-	fprintf(stderr, "Error: malloc failed\n"), exit(EXIT_FAILURE)
+#define MALLOC_CHECK(var) ( \
+	var = (var == NULL) ? (fprintf(stderr, "Error: malloc failed\n"), \
+	exit(EXIT_FAILURE), var) : var)
 
 /* wrapper_functions.c */
 stack_t *push_new(int element);
-stack_t *pop_new();
+stack_t *pop_new(void);
 stack_t *iterator(stack_t *current);
-void free_SQW();
-void debug_print_SQW();
+void free_SQW(void);
+void debug_print_SQW(void);
 
 /* stack_operations.c */
 void push_ist(stack_t **stack, unsigned int line_number);

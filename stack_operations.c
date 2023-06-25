@@ -18,7 +18,7 @@ void pop_ist(__attribute__((__unused__)) stack_t **stack,
 	__attribute__((__unused__)) unsigned int line_number)
 {
 	stack_t *popped = pop_new();
-	
+
 	if (popped == NULL)
 		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number),
 		exit(EXIT_FAILURE);
@@ -36,6 +36,7 @@ void swap_ist(__attribute__((__unused__)) stack_t **stack,
 {
 	stack_t *s1, *s2;
 	int temp;
+
 	s1 = iterator(NULL);
 	s2 = iterator(s1);
 	if (s1 == NULL || s2 == NULL)

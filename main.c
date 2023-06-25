@@ -31,8 +31,7 @@ char **tokenise(char *line)
 		else
 		{
 			line[tk_l] = '\0';
-			strcpy(tk, line), line += tk_l + 1, tk_l = 0;
-			tks[0] = tk;
+			strcpy(tk, line), line += tk_l + 1, tk_l = 0, tks[0] = tk;
 			while (isspace(*line) && *line != '-' && *line != '+')
 				line++;
 			while (isintlit(line[tk_l]))
@@ -41,15 +40,14 @@ char **tokenise(char *line)
 			{
 				tk = malloc(tk_l + 1);
 				MALLOC_CHECK(tk);
-				tk[tk_l] = '\0', strncpy(tk, line, tk_l);
-				tks[1] = tk;
+				tk[tk_l] = '\0', strncpy(tk, line, tk_l), tks[1] = tk;
 			}
 		}
 	}
 	else
 	{
 		tks[0] = malloc(1);
-		tks[0][0] = '\0'; 
+		tks[0][0] = '\0';
 	}
 	return (tks);
 }
