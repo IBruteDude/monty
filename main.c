@@ -14,7 +14,7 @@ char **tokenise(char *line)
 	char *tk, **tks = malloc(2 * sizeof(char *));
 
 	MALLOC_CHECK(tks);
-	tks[0] = malloc(1), tks[0][0] = '\0', tks[1] = NULL;
+	tks[1] = NULL;
 	while (isspace(*line))
 		line++;
 	if (*line != '\0')
@@ -46,6 +46,11 @@ char **tokenise(char *line)
 			}
 		}
 	}
+	else
+	{
+		tks[0] = malloc(1);
+		tks[0][0] = '\0'; 
+	}
 	return (tks);
 }
 
@@ -54,8 +59,9 @@ char **tokenise(char *line)
  *
  * @tok_arr: the parsed tokens array
  * @line_no: the execution line number
+ * Return: exit status
  */
-void exec_instruction(char **tok_arr, unsigned int line_no)
+int exec_instruction(char **tok_arr, unsigned int line_no)
 {
 	int i = 1;
 	stack_t *stack_node;
@@ -72,18 +78,26 @@ void exec_instruction(char **tok_arr, unsigned int line_no)
 	if (strcmp(tok_arr[0], "push") == 0)
 	{
 		if (tok_arr[1] == NULL)
-			fprintf(stderr, "L%d: usage: push integer\n", line_no),
-			exit(EXIT_FAILURE);
-		push_new(&global_wrapper, atoi(tok_arr[1]));
-		return;
+		{
+			fprintf(stderr, "L%d: usage: push integer\n", line_no);
+			return (EXIT_FAILURE);
+		}
+		push_new(atoi(tok_arr[1]));
+		return (EXIT_SUCCESS);
 	}
 	for (i = 1; insts[i].opcode != NULL; i++)
 		if (strcmp(insts[i].opcode, tok_arr[0]) == 0)
 		{
-			stack_node = iterator(&global_wrapper, NULL);
+			stack_node = iterator(NULL);
 			insts[i].f(&stack_node, line_no);
-			return;
+			return (EXIT_SUCCESS);
 		}
+	if (strcmp(tok_arr[0], ""))
+	{
+		fprintf(stderr, "L%d: unknown instruction %s\n", line_no, tok_arr[0]);
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
 }
 
 /**
@@ -132,18 +146,17 @@ long int _getline(char **lineptr, size_t *n, FILE *stream)
  */
 int main(int argc, char *argv[])
 {
-	unsigned int i, line_no = 1;
-	size_t line_len = 1;
+	unsigned int i, line_no = 1, exec_stat = EXIT_SUCCESS;
+	size_t line_len = 1024;
 	FILE *infile;
-	char **tk_arr, *line = malloc(1);
-	SQW global_wrapper;
+	char **tk_arr, *line = malloc(line_len);
 
 	if (argc < 2)
 		fprintf(stderr, "USAGE: monty file\n"), exit(EXIT_FAILURE);
 	MALLOC_CHECK(line);
 	global_wrapper.SQ_flag = STACK_F;
 	global_wrapper.head = global_wrapper.tail = NULL;
-	for (i = 1; i < (unsigned int)argc; i++)
+	for (i = 1; i < (unsigned int)argc && exec_stat == EXIT_SUCCESS; i++)
 	{
 		infile = fopen(argv[i], "r");
 		if (infile == NULL)
@@ -151,10 +164,13 @@ int main(int argc, char *argv[])
 		do {
 			_getline(&line, &line_len, infile);
 			tk_arr = tokenise(line);
-			exec_instruction(tk_arr, line_no);
+			exec_stat = exec_instruction(tk_arr, line_no);
+			free(tk_arr[0]), free(tk_arr[1]), free(tk_arr);
 			line_no++;
-		} while (!feof(infile));
-		exit(EXIT_SUCCESS);
+		} while (!feof(infile) && exec_stat == EXIT_SUCCESS);
+		free(line);
+		free_SQW();
+		fclose(infile);
 	}
-	return (EXIT_SUCCESS);
+	return (exec_stat);
 }

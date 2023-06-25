@@ -12,7 +12,7 @@ void pall_ist(__attribute__((__unused__))stack_t **stack,
 	stack_t *stack_node = NULL;
 
 	do {
-		stack_node = iterator(&global_wrapper, stack_node);
+		stack_node = iterator(stack_node);
 		if (stack_node != NULL)
 			printf("%d\n", stack_node->n);
 	} while (stack_node != NULL);
@@ -28,7 +28,7 @@ void pint_ist(__attribute__((__unused__))stack_t **stack,
 {
 	stack_t *stack_node = NULL;
 
-	stack_node = iterator(&global_wrapper, stack_node);
+	stack_node = iterator(stack_node);
 	if (stack_node != NULL)
 		printf("%d\n", stack_node->n);
 	else
@@ -46,7 +46,7 @@ void pchar_ist(__attribute__((__unused__))stack_t **stack,
 {
 	stack_t *stack_node = NULL;
 
-	stack_node = iterator(&global_wrapper, stack_node);
+	stack_node = iterator(stack_node);
 	if (stack_node != NULL)
 	{
 		if (stack_node->n <= 127 && stack_node->n >= 0)
@@ -71,7 +71,7 @@ void pstr_ist(__attribute__((__unused__))stack_t **stack,
 	stack_t *stack_node = NULL;
 
 	do {
-		stack_node = iterator(&global_wrapper, stack_node);
+		stack_node = iterator(stack_node);
 		if (stack_node != NULL && stack_node->n > 0 && stack_node->n <= 127)
 			putchar(stack_node->n);
 	} while (stack_node != NULL && stack_node->n > 0 && stack_node->n <= 127);

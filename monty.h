@@ -1,5 +1,5 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef MONTY_H
+#define MONTY_H
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,7 +7,7 @@
 #include <errno.h>
 #include <limits.h>
 #include <math.h>
-#include <stdarg.h>
+#include <stdint.h>
 #include <stddef.h>
 #include <time.h>
 /**
@@ -43,7 +43,6 @@ typedef struct instruction_s
 typedef struct stack_queue_wrapper
 {
 	int SQ_flag;
-	unsigned int line_no;
 	stack_t *head;
 	stack_t *tail;
 } SQW;
@@ -65,9 +64,11 @@ if (var == NULL) \
 	fprintf(stderr, "Error: malloc failed\n"), exit(EXIT_FAILURE)
 
 /* wrapper_functions.c */
-stack_t *push_new(SQW *wpr, int element);
-stack_t *pop_new(SQW *wpr);
-stack_t *iterator(SQW *wpr, stack_t *current);
+stack_t *push_new(int element);
+stack_t *pop_new();
+stack_t *iterator(stack_t *current);
+void free_SQW();
+void debug_print_SQW();
 
 /* stack_operations.c */
 void push_ist(stack_t **stack, unsigned int line_number);

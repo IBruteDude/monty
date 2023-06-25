@@ -11,12 +11,13 @@ void add_ist(__attribute__((__unused__))stack_t **stack,
 {
 	stack_t *s1, *s2;
 
-	s1 = pop_new(&global_wrapper);
-	s2 = pop_new(&global_wrapper);
+	s1 = pop_new();
+	s2 = pop_new();
 	if (s1 == NULL || s2 == NULL)
 		fprintf(stderr, "L%d: can't add, stack too short\n", line_number),
 		exit(EXIT_FAILURE);
-	push_new(&global_wrapper, s2->n + s1->n);
+	push_new(s2->n + s1->n);
+	free(s1), free(s2);
 }
 /**
  * sub_ist - instruction to perform subtract operation on the last two elements
@@ -29,12 +30,13 @@ void sub_ist(__attribute__((__unused__))stack_t **stack,
 {
 	stack_t *s1, *s2;
 
-	s1 = pop_new(&global_wrapper);
-	s2 = pop_new(&global_wrapper);
+	s1 = pop_new();
+	s2 = pop_new();
 	if (s1 == NULL || s2 == NULL)
 		fprintf(stderr, "L%d: can't sub, stack too short\n", line_number),
 		exit(EXIT_FAILURE);
-	push_new(&global_wrapper, s2->n - s1->n);
+	push_new(s2->n - s1->n);
+	free(s1), free(s2);
 }
 /**
  * mul_ist - instruction to perform multiply operation on the last two elements
@@ -47,12 +49,13 @@ void mul_ist(__attribute__((__unused__))stack_t **stack,
 {
 	stack_t *s1, *s2;
 
-	s1 = pop_new(&global_wrapper);
-	s2 = pop_new(&global_wrapper);
+	s1 = pop_new();
+	s2 = pop_new();
 	if (s1 == NULL || s2 == NULL)
 		fprintf(stderr, "L%d: can't mul, stack too short\n", line_number),
 		exit(EXIT_FAILURE);
-	push_new(&global_wrapper, s2->n * s1->n);
+	push_new(s2->n * s1->n);
+	free(s1), free(s2);
 }
 /**
  * div_ist - instruction to perform division operation on the last two elements
@@ -65,15 +68,16 @@ void div_ist(__attribute__((__unused__))stack_t **stack,
 {
 	stack_t *s1, *s2;
 
-	s1 = pop_new(&global_wrapper);
-	s2 = pop_new(&global_wrapper);
+	s1 = pop_new();
+	s2 = pop_new();
 	if (s1 == NULL || s2 == NULL)
 		fprintf(stderr, "L%d: can't div, stack too short\n", line_number),
 		exit(EXIT_FAILURE);
 	if (s1->n == 0)
 		fprintf(stderr, "L%d: division by zero\n", line_number),
 		exit(EXIT_FAILURE);
-	push_new(&global_wrapper, s2->n / s1->n);
+	push_new(s2->n / s1->n);
+	free(s1), free(s2);
 }
 /**
  * mod_ist - instruction to perform modulo operation on the last two elements
@@ -86,13 +90,14 @@ void mod_ist(__attribute__((__unused__))stack_t **stack,
 {
 	stack_t *s1, *s2;
 
-	s1 = pop_new(&global_wrapper);
-	s2 = pop_new(&global_wrapper);
+	s1 = pop_new();
+	s2 = pop_new();
 	if (s1 == NULL || s2 == NULL)
 		fprintf(stderr, "L%d: can't mod, stack too short\n", line_number),
 		exit(EXIT_FAILURE);
 	if (s1->n == 0)
 		fprintf(stderr, "L%d: division by zero\n", line_number),
 		exit(EXIT_FAILURE);
-	push_new(&global_wrapper, s2->n % s1->n);
+	push_new(s2->n % s1->n);
+	free(s1), free(s2);
 }

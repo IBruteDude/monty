@@ -17,9 +17,13 @@ void push_ist(__attribute__((__unused__)) stack_t **stack,
 void pop_ist(__attribute__((__unused__)) stack_t **stack,
 	__attribute__((__unused__)) unsigned int line_number)
 {
-	if (pop_new(&global_wrapper) == NULL)
+	stack_t *popped = pop_new();
+	
+	if (popped == NULL)
 		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number),
 		exit(EXIT_FAILURE);
+	if (global_wrapper.head != NULL && global_wrapper.tail != NULL)
+		free(popped);
 }
 /**
  * swap_ist - instruction to swap the last two linked list elements
@@ -32,13 +36,13 @@ void swap_ist(__attribute__((__unused__)) stack_t **stack,
 {
 	stack_t *s1, *s2;
 
-	s1 = pop_new(&global_wrapper);
-	s2 = pop_new(&global_wrapper);
+	s1 = pop_new();
+	s2 = pop_new();
 	if (s1 == NULL || s2 == NULL)
 		fprintf(stderr, "L%d: can't swap, stack too short\n", line_number),
 		exit(EXIT_FAILURE);
-	push_new(&global_wrapper, s1->n);
-	push_new(&global_wrapper, s2->n);
+	push_new(s1->n);
+	push_new(s2->n);
 }
 /**
  * nop_ist - the null/no operation instruction
